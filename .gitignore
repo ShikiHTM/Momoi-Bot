@@ -1,0 +1,19 @@
+node_modules
+
+package-lock.json
+
+<<<<<<< HEAD
+init/L2D
+init/images
+=======
+Utils/images
+Utils/L2D
+>>>>>>> d768418 (Re-construct the entire code)
+
+.config/*.json
+
+cmds/Character
+
+.env
+
+src/getAko.js
