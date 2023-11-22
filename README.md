@@ -40,6 +40,9 @@ nodemon ./src/index.js
 
 # Node
 Node ./src/index.js
+
+# or....
+npm run start
 ```
 ## Footer
 I hope you have a good time with my bot, feel free to contribute or contact me if you need something!
