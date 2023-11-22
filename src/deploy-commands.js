@@ -1,5 +1,5 @@
 const {REST, Routes} = require('discord.js');
-const {clientId} = require('../.config/config.json');
+const {clientId} = require('../config/config.json');
 const fs = require('node:fs');
 const path = require('node:path');
 const {config} = require('dotenv')
@@ -30,11 +30,7 @@ const rest = new REST().setToken(process.env.TOKEN);
 
         const data = await rest.put(Routes.applicationCommands(clientId), {body: commands})
         
-<<<<<<< HEAD
-        console.log(`Succesfully reloaded ${data.length} application (/) commands`);
-=======
         console.log(`Success reloaded ${data.length} application (/) commands`);
->>>>>>> d768418 (Re-construct the entire code)
     } catch(err) {
         console.log(err);
     }

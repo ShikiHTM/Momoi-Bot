@@ -4,9 +4,9 @@ const chalk = require('chalk')
 
 const JSONdb = require('simple-json-db')
 
-const db = new JSONdb('./.config/DatabaseConfig/Current.raid.json')
+const db = new JSONdb('./config/DatabaseConfig/Current.raid.json')
 
-const curRaid = require('./../.config/DatabaseConfig/Current.raid.json')
+const curRaid = require('./../config/DatabaseConfig/Current.raid.json')
 const { pingWhenANewRaidBossApperance } = require('../modules/PingWhen.Boss')
 
 

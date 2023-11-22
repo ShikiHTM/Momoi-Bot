@@ -3,7 +3,7 @@ const {config} = require('dotenv')
 const axios = require('axios')
 const fs = require('node:fs')
 const moment = require('moment/moment')
-const {Arona} = require('./../../.config/Game_Init_Config/arona.json')
+const {Arona} = require('./../../config/Game_Init_Config/arona.json')
 
 config();
 
@@ -46,9 +46,9 @@ module.exports = {
 
     async execute(interaction) {
         const school = readJSONFile('./Utils/Students/school.json');
-        const SchoolColors = readJSONFile('./.config/Game_Init_Config/BannerConfig/color.json');
-        const StudentIcons = readJSONFile('./.config/Game_Init_Config/BannerConfig/logo.json');
-        const BannerURLs = readJSONFile('./.config/Game_Init_Config/BannerConfig/bannerURLs.json')
+        const SchoolColors = readJSONFile('./config/Game_Init_Config/BannerConfig/color.json');
+        const StudentIcons = readJSONFile('./config/Game_Init_Config/BannerConfig/logo.json');
+        const BannerURLs = readJSONFile('./config/Game_Init_Config/BannerConfig/bannerURLs.json')
 
         const API = process.env.API;
 

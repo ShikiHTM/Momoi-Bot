@@ -2,16 +2,16 @@ const cheerio = require('cheerio');
 const axios = require('axios');
 const jsondb = require('simple-json-db');
 const { PingWhenBanner } = require('../modules/PingWhen.Banner');
-const { CHANNEL } = require('./../.config/config.json')
+const { CHANNEL } = require('./../config/config.json')
 const chalk = require('chalk')
 
 const fs = require('node:fs')
 
-let db = new jsondb('./.config/Game_Init_Config/BannerConfig/bannerLink.json');
-let limts = require('./../.config/DatabaseConfig/limits.json');
+let db = new jsondb('./config/Game_Init_Config/BannerConfig/bannerLink.json');
+let limts = require('./../config/DatabaseConfig/limits.json');
 const { client } = require('../src');
 let oldlimts = limts.current
-let path = './.config/DatabaseConfig/limits.json'
+let path = './config/DatabaseConfig/limits.json'
 let tmp;
 
 //Replace specific words
@@ -48,12 +48,7 @@ function ReplaceWords(words) {
 
     return words
 }
-
-<<<<<<< HEAD
-function DoingStuff(charName, charImgs, Time) {
-=======
 function handleNewBanners(charName, charImgs, Time) {
->>>>>>> d768418 (Re-construct the entire code)
     const channel = client.channels.cache.get(CHANNEL)
     console.log(`New ${chalk.blueBright('Students')} has apperance! Sensei please give me 1200 ${chalk.blue('pyroxense')}`)
     channel.send("Sensei! New students are coming!")
@@ -118,23 +113,16 @@ function BannerCrawling() {
             if(err) throw err;
         })
 
-<<<<<<< HEAD
-        DoingStuff(charName, imgs, convertDate)
-        return;
-    }
-    console.log("No change has been caught, continue checking after 10 minutes.")
-=======
         handleNewBanners(charName, imgs, convertDate)
         return;
     }
     console.log("No change has been caughted")
->>>>>>> d768418 (Re-construct the entire code)
     return;
 })
 }
 
 //BannerCrawling()
 
-setInterval((c) => {
+setInterval(() => {
     BannerCrawling();
 }, 10*60*1000);

@@ -3,8 +3,8 @@ A Discord bot for Blue Archive game, using API from [torikushiii](https://github
 # Installing
 **Node.js 16 or higher is required**
 
-To install all libraries, you can use the following commands:
-```bash
+To install all library, you can use the following commands:
+```
 # NPM
 npm install
 
@@ -12,7 +12,7 @@ npm install
 yarn
 ```
 To use the bot, you need to create a .env file with the following commands:
-```bash
+```
 # create .env file
 touch .env
 ```
@@ -27,7 +27,7 @@ Add your Bot client ID and your Server ID in
 ``
 # Run the bot
 To run Momoi-bot you can use a few ways:
-```bash
+```
 # PM2
 yarn add -D pm2
 

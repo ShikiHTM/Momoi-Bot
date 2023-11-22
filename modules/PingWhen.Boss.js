@@ -1,13 +1,13 @@
 const { client } = require("../src");
 const fs = require("fs")
 const moment = require("moment")
-const {CHANNEL} = require('./../.config/config.json')
+const {CHANNEL} = require('./../config/config.json')
 const {EmbedBuilder} = require('discord.js')
 
 function pingWhenANewRaidBossApperance(bossName, start, end) {
-    const upBanner = fs.readFileSync("./.config/Game_Init_Config/RaidConfig/raid.json");
+    const upBanner = fs.readFileSync("./config/Game_Init_Config/RaidConfig/raid.json");
     const rawBanner = JSON.parse(upBanner);
-    const upColor = fs.readFileSync("./.config/Game_Init_Config/RaidConfig/raidColor.json");
+    const upColor = fs.readFileSync("./config/Game_Init_Config/RaidConfig/raidColor.json");
     const rawColor = JSON.parse(upColor)    
 
     setTimeout(() => {

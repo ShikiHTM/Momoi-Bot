@@ -2,7 +2,7 @@ const {SlashCommandBuilder, EmbedBuilder} = require('discord.js')
 const axios = require('axios')
 const fs = require('node:fs')
 const moment = require('moment')
-const {Arona} = require('../../.config/Game_Init_Config/arona.json')
+const {Arona} = require('../../config/Game_Init_Config/arona.json')
 const {config} = require('dotenv')
 
 config();
@@ -11,7 +11,7 @@ const readJSONFile = (JSONpath) => {
     return JSON.parse(fs.readFileSync(JSONpath, 'utf-8'))
 }
 
-const makeEmbed = (interaction, bossName, startAt, endAt, BannerURLs, Color, isCurrent) => {
+const makeEmbed = (bossName, startAt, endAt, BannerURLs, Color) => {
     const embed = new EmbedBuilder()
     .setTitle(bossName.replace(/_/g, " "))
     .setImage(BannerURLs)
@@ -27,7 +27,7 @@ const convertTime = (Time) => {
     return moment(new Date(Time)).format("DD/MM/YYYY")
 }
 
-const path = "./.config/Game_Init_Config/RaidConfig/";
+const path = "./config/Game_Init_Config/RaidConfig/";
 
 module.exports = {
     data: new SlashCommandBuilder().setName("raid").setDescription("Get current or upcomming raid!").addStringOption(option =>option.setName('type').setDescription('Type of raids').setRequired(true).addChoices({name: 'current', value: 'current'},{name: 'upcoming', value: 'upcoming'})),
@@ -54,7 +54,7 @@ module.exports = {
 
         const quotes = isCurrent ? `${interaction.user.displayName}-sensei, ${raidName.replace(/_/g, " ")}'s assault Kivotos!` : `${interaction.user.displayName}-sensei, ${raidName.replace(/_/g, " ")}'s coming! Please give us instructions!`;
 
-        const embed = makeEmbed(interaction, raidName, raidStart, raidEnd, Raid[raidName], RaidColor[raidName], isCurrent);
+        const embed = makeEmbed(raidName, raidStart, raidEnd, Raid[raidName], RaidColor[raidName]);
 
         interaction.reply({
             content: quotes,
