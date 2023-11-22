@@ -1,6 +1,5 @@
 const axios = require('axios')
 const {config} = require('dotenv')
-const fs = require('node:fs')
 const { pingWhenANewRaidBossApperance } = require('../modules/PingWhen.Boss')
 const JSONdb = require('simple-json-db')
 const chalk = require('chalk')
@@ -8,7 +7,6 @@ const chalk = require('chalk')
 const db = new JSONdb('./config/DatabaseConfig/Upcoming.raid.json')
 
 const curRaidData = require('./../config/DatabaseConfig/Upcoming.raid.json')
-const boss = require('../cmds/Raid/boss')
 
 config();
 
@@ -32,6 +30,7 @@ const RaidUpcomming = () => {
         return;
     })
 }
+
 setInterval(() => {
-    RaidUpcomming()
+	RaidUpcomming()
 }, 10*60*1000)

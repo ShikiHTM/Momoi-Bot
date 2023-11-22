@@ -4,11 +4,13 @@ const moment = require("moment")
 const {CHANNEL} = require('./../config/config.json')
 const {EmbedBuilder} = require('discord.js')
 
+const fileToJson = (filePath) => JSON.parse(fs.readFileSync(filePath, 'utf8'));
+const path = './config/Game_Init_Config/RaidConfig'
+
 function pingWhenANewRaidBossApperance(bossName, start, end) {
-    const upBanner = fs.readFileSync("./config/Game_Init_Config/RaidConfig/raid.json");
-    const rawBanner = JSON.parse(upBanner);
-    const upColor = fs.readFileSync("./config/Game_Init_Config/RaidConfig/raidColor.json");
-    const rawColor = JSON.parse(upColor)    
+	console.log(`Sensei! New raid are coming!`)
+    const upBanner = fileToJson(path + "/raid.json");
+    const upColor = fileToJson(path + "/raidColor.json");
 
     setTimeout(() => {
         client.channels.cache.get(CHANNEL).send("Sensei! A new boss has come!")
@@ -21,8 +23,8 @@ function pingWhenANewRaidBossApperance(bossName, start, end) {
     let formattedEnd = moment(endAt).format("DD/MM/YYYY");
     const embed = new EmbedBuilder()
     .setTitle(bossName.replace(/ _/g, " "))
-    .setColor(rawColor[bossName])
-    .setImage(rawBanner[bossName])
+    .setColor(upColor[bossName])
+    .setImage(upBanner[bossName])
     .setFields(
         {
             name:"Start At:", value: formattedStart, inline:true

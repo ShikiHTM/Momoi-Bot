@@ -16,36 +16,14 @@ let tmp;
 
 //Replace specific words
 function ReplaceWords(words) {
-    if(words && String(words).includes("Bunny Girl")){ 
+    if (words) {
         words = words.replace("Bunny Girl", "Bunny")
-        //console.log(words)
-    };
-
-    if(words && String(words).includes("Cheerleader")){ 
-        words = words.replace("Cheerleader", "Cheer Squad")
-        //console.log(words)
-    };
-
-    if(words && String(words).includes("Sportswear")){ 
-        words = words.replace("Sportswear", "Track")
-        //console.log(words)
-    };
-
-    if(words && String(words).includes("Kid")){ 
-        words = words.replace("Kid", "Small")
-        //console.log(words)
-    };
-
-    if(words && String(words).includes("Riding")){ 
-        words = words.replace("Riding ", "Cycling")
-        //console.log(words)
-    };
-
-    if(words && String(words).includes("Arisu")){ 
-        words = words.replace("Arisu", "Aris")
-        //console.log(words)
-    };
-
+            .replace("Cheerleader", "Cheer Squad")
+            .replace("Sportswear", "Track")
+            .replace("Kid", "Small")
+            .replace("Riding ", "Cycling")
+            .replace("Arisu", "Aris");
+    }
     return words
 }
 function handleNewBanners(charName, charImgs, Time) {
@@ -121,8 +99,10 @@ function BannerCrawling() {
 })
 }
 
-//BannerCrawling()
+//setTimeout(() => {
+//	BannerCrawling();
+//}, 3000)
 
 setInterval(() => {
-    BannerCrawling();
+   BannerCrawling();
 }, 10*60*1000);

@@ -5,27 +5,26 @@ const fs = require("node:fs")
 const {Arona} = require('./../config/Game_Init_Config/arona.json')
 const moment = require('moment')
 
+const ReadJSONFile = (filePath) => JSON.parse(fs.readFileSync(filePath, 'utf8'));
+
 function PingWhenBanner(charName, charBannerURL, Time) {
-    const schoolData = fs.readFileSync('./Utils/Students/school.json')
-    const rawSchoolData = JSON.parse(schoolData)
-    const studentLogo = fs.readFileSync('./config/Game_Init_Config/BannerConfig/logo.json')
-    const rawLogo = JSON.parse(studentLogo)
-    const schoolColor = fs.readFileSync('./config/Game_Init_Config/BannerConfig/color.json')
-    const rawColor = JSON.parse(schoolColor)
+    const schoolData = ReadJSONFile('./Utils/Students/school.json')
+    const studentLogo = ReadJSONFile('./config/Game_Init_Config/BannerConfig/logo.json')
+    const schoolColor = ReadJSONFile('./config/Game_Init_Config/BannerConfig/color.json')
     const startIn = moment(Time).format("DD/MM/YYYY")
     
     const embed = new EmbedBuilder()
     .setAuthor({
-        name: 'New Banner released!', iconURL: rawLogo[charName]
+        name: 'New Banner released!', iconURL: studentLogo[charName]
     })
-    .setColor(rawColor[rawSchoolData[charName]])
+    .setColor(schoolColor[schoolData[charName]])
     .setImage(charBannerURL)
     .setFields(
         {
             name:"Name:", value: charName, inline:true
         },
         {
-            name:"From:", value: rawSchoolData[charName], inline: true
+            name:"From:", value: schoolData[charName], inline: true
         },
         {
             name: "Start At:", value: startIn, inline:true
@@ -36,7 +35,7 @@ function PingWhenBanner(charName, charBannerURL, Time) {
         text: 'Give us 1200 pyroxene, sensei', iconURL: Arona
     })
 
-    setTimeout(c => {
+    setTimeout(() => {
         client.channels.cache.get(CHANNEL).send({
             embeds: [embed]
         })
