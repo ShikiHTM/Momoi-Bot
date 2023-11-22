@@ -29,12 +29,12 @@ Add your Bot client ID and your Server ID in
 To run Momoi-bot you can use a few ways:
 ```bash
 # PM2
-yarn add -D pm2
+yarn global add pm2
 
 pm2 start ./src/index.js --name "ANYTHING"
 
 # Nodemon
-yarn add -D nodemon
+yarn global add nodemon
 
 nodemon ./src/index.js
 
@@ -43,6 +43,8 @@ Node ./src/index.js
 
 # or....
 npm run start
+# and to stop
+npm run stop
 ```
 ## Footer
 I hope you have a good time with my bot, feel free to contribute or contact me if you need something!

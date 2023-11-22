@@ -2000,7 +2000,7 @@ pm2-sysmonit@^1.2.8:
 
 pm2@^5.3.0:
   version "5.3.0"
-  resolved "https://registry.npmjs.org/pm2/-/pm2-5.3.0.tgz"
+  resolved "https://registry.yarnpkg.com/pm2/-/pm2-5.3.0.tgz#06850810f77cd98495ae1c66fbdd028a8fb5899e"
   integrity sha512-xscmQiAAf6ArVmKhjKTeeN8+Td7ZKnuZFFPw1DGkdFPR/0Iyx+m+1+OpCdf9+HQopX3VPc9/wqPQHqVOfHum9w==
   dependencies:
     "@pm2/agent" "~2.0.0"
