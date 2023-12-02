@@ -16,87 +16,87 @@ let tmp;
 
 //Replace specific words
 function ReplaceWords(words) {
-    if (words) {
-        words = words.replace("Bunny Girl", "Bunny")
-            .replace("Cheerleader", "Cheer Squad")
-            .replace("Sportswear", "Track")
-            .replace("Kid", "Small")
-            .replace("Riding ", "Cycling")
-            .replace("Arisu", "Aris");
-    }
-    return words
+	if (words) {
+		words = words.replace("Bunny Girl", "Bunny")
+			.replace("Cheerleader", "Cheer Squad")
+			.replace("Sportswear", "Track")
+			.replace("Kid", "Small")
+			.replace("Riding ", "Cycling")
+			.replace("Arisu", "Aris");
+	}
+	return words
 }
 function handleNewBanners(charName, charImgs, Time) {
-    const channel = client.channels.cache.get(CHANNEL)
-    console.log(`New ${chalk.blueBright('Students')} has apperance! Sensei please give me 1200 ${chalk.blue('pyroxense')}`)
-    channel.send("Sensei! New students are coming!")
-    for(let i = 0; i < charImgs.length; ++i) {
-        let tmpIndex = i + oldlimts + 1;
-        let curCharName = charName[tmpIndex];
-        let curCharBanner = charImgs[i];
-        let curCharTime = Time[tmpIndex];
-        PingWhenBanner(curCharName, curCharBanner, curCharTime)
-    }
+	const channel = client.channels.cache.get(CHANNEL)
+	console.log(`New ${chalk.blueBright('Students')} has apperance! Sensei please give me 1200 ${chalk.blue('pyroxense')}`)
+	channel.send("Sensei! New students are coming!")
+	for (let i = 0; i < charImgs.length; ++i) {
+		let tmpIndex = i + oldlimts + 1;
+		let curCharName = charName[tmpIndex];
+		let curCharBanner = charImgs[i];
+		let curCharTime = Time[tmpIndex];
+		PingWhenBanner(curCharName, curCharBanner, curCharTime)
+	}
 }
 
 function BannerCrawling() {
-    axios.get(`https://bluearchive.wiki/wiki/Banner_List_(Global)`).then(async c => {
-    const $ = cheerio.load(c.data);
+	axios.get(`https://bluearchive.wiki/wiki/Banner_List_(Global)`).then(async c => {
+		const $ = cheerio.load(c.data);
 
-    const imgs = [], charName = [], rawDate = [], convertDate = [];
+		const imgs = [], charName = [], rawDate = [], convertDate = [];
 
-    //Get Images
-    $("td.image").each((i, el) => {
-        const img = $(el).find("img").attr("src").replace("//", "https://")
-        
-        if(i > limts.current) {
-            tmp = i; // Take the new limit
-            imgs.push(img);
-        }
-    })
+		//Get Images
+		$("td.image").each((i, el) => {
+			const img = $(el).find("img").attr("src").replace("//", "https://")
 
-    // //Get student's name
-    $("td").each((i, el) => {
-        let charN = $(el).find("a").attr("title");
+			if (i > limts.current) {
+				tmp = i; // Take the new limit
+				imgs.push(img);
+			}
+		})
 
-        charN = ReplaceWords(charN)
+		// //Get student's name
+		$("td").each((i, el) => {
+			let charN = $(el).find("a").attr("title");
 
-        if(charN) charName.push(charN);
-    })
+			charN = ReplaceWords(charN)
 
-    //Get date
-    $("td").each((i, el) => {
-        $(el).find("i").remove("i");
-        $(el).find("a").remove("a")
+			if (charN) charName.push(charN);
+		})
 
-        if($(el).text() != '') rawDate.push($(el).text())
-    })
+		//Get date
+		$("td").each((i, el) => {
+			$(el).find("i").remove("i");
+			$(el).find("a").remove("a")
 
-    rawDate.forEach(el => {
-        let format = new Date(el.split(" ")[0])
-        convertDate.push(format.getTime())
-    })
-    //Auto-Ping
-    if(limts.current < tmp) {
-        //update the database
-        for(let i = 0; i < imgs.length; ++i) {
-            let tmpIndex = i + limts.current + 1;
-            db.set(charName[tmpIndex], imgs[i]);
-        }
+			if ($(el).text() != '') rawDate.push($(el).text())
+		})
 
-        //update Limits
-        limts.current = tmp;
+		rawDate.forEach(el => {
+			let format = new Date(el.split(" ")[0])
+			convertDate.push(format.getTime())
+		})
+		//Auto-Ping
+		if (limts.current < tmp) {
+			//update the database
+			for (let i = 0; i < imgs.length; ++i) {
+				let tmpIndex = i + limts.current + 1;
+				db.set(charName[tmpIndex], imgs[i]);
+			}
 
-        fs.writeFile(path, JSON.stringify(limts, null, 2), (err) => {
-            if(err) throw err;
-        })
+			//update Limits
+			limts.current = tmp;
 
-        handleNewBanners(charName, imgs, convertDate)
-        return;
-    }
-    console.log("No change has been caughted")
-    return;
-})
+			fs.writeFile(path, JSON.stringify(limts, null, 2), (err) => {
+				if (err) throw err;
+			})
+
+			handleNewBanners(charName, imgs, convertDate)
+			return;
+		}
+		console.log("No change has been caughted")
+		return;
+	})
 }
 
 //setTimeout(() => {
@@ -104,5 +104,5 @@ function BannerCrawling() {
 //}, 3000)
 
 setInterval(() => {
-   BannerCrawling();
-}, 10*60*1000);
+	BannerCrawling();
+}, 60 * 10 * 1000);
