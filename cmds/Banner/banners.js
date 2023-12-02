@@ -42,7 +42,15 @@ const convertTime = (Time) => {
 }
 
 module.exports = {
-	data: new SlashCommandBuilder().setName('banner').setDescription('Return current banner!'),
+	data: new SlashCommandBuilder().setName('banner').setDescription('Return current banner or upcoming banner!').addStringOption((option) => {
+		option.setName('type')
+			.setDescription('Type of return value')
+			.setRequired(true)
+			.addChoices(
+				{ name: 'current', value: 'current' },
+				{ name: 'upcoming', value: 'upcoming' }
+			)
+	}),
 
 	async execute(interaction) {
 		const school = readJSONFile('./Utils/Students/school.json');
@@ -52,20 +60,8 @@ module.exports = {
 
 		const API = process.env.API;
 
-		axios.get(API + '/banner').then((c) => {
-			const datas = c.data;
+		const data = await axios.get(API + '/banner')
 
-			const currentBanner = datas.current;
-			currentBanner.forEach((student) => {
-				const gachaType = student.gachaType;
-
-				const name = student.rateups[0];
-				isLimited(gachaType) ? name + ' (Limited)' : name;
-
-				const dateStart = convertTime(student.startAt);
-				const dateEnd = convertTime(student.endAt);
-				makeEmbed(interaction, name, StudentIcons[name], SchoolColors[school[name]], school[name], dateStart, dateEnd, BannerURLs[name]);
-			})
-		})
+		console.log(data)
 	}
 }
