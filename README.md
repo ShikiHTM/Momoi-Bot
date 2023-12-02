@@ -1,8 +1,8 @@
 <img src="https://i.imgur.com/WpCRgvG.png" align='right'>
 
-# Momoi-Bot
+# Momoi-Bot ✨
 A Discord bot for Blue Archive game, using API from [torikushiii](https://github.com/torikushiii/BlueArchiveAPI). If you could, please support both of us ❤
-# Installing
+# Installing🔭
 **Node.js 16 or higher is required**
 
 To install all library, you can use the following commands:
@@ -27,7 +27,7 @@ Add your Bot client ID and your Server ID in
 ``
 .config/config.json
 ``
-# Run the bot
+# Run the bot 🌱
 To run Momoi-bot you can use a few ways:
 ```bash
 # PM2
