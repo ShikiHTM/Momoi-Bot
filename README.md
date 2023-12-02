@@ -1,3 +1,5 @@
+<img src="https://i.imgur.com/WpCRgvG.png" align='right'>
+
 # Momoi-Bot
 A Discord bot for Blue Archive game, using API from [torikushiii](https://github.com/torikushiii/BlueArchiveAPI). If you could, please support both of us ❤
 # Installing
