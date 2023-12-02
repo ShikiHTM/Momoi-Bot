@@ -42,7 +42,7 @@ const convertTime = (Time) => {
 }
 
 module.exports = {
-	data: new SlashCommandBuilder().setName('banner').setDescription('Return current banner or upcoming banner!').addStringOption((option) => {
+	data: new SlashCommandBuilder().setName('banner').setDescription('Return current banner or upcoming banner!').addStringOption(option =>
 		option.setName('type')
 			.setDescription('Type of return value')
 			.setRequired(true)
@@ -50,9 +50,11 @@ module.exports = {
 				{ name: 'current', value: 'current' },
 				{ name: 'upcoming', value: 'upcoming' }
 			)
-	}),
+	),
 
 	async execute(interaction) {
+		const UserChoice = interaction.options.getString('type')
+
 		const school = readJSONFile('./Utils/Students/school.json');
 		const SchoolColors = readJSONFile('./config/Game_Init_Config/BannerConfig/color.json');
 		const StudentIcons = readJSONFile('./config/Game_Init_Config/BannerConfig/logo.json');
@@ -60,8 +62,24 @@ module.exports = {
 
 		const API = process.env.API;
 
-		const data = await axios.get(API + '/banner')
+		const resp = await axios.get(API + '/banner')
 
-		console.log(data)
+		let BannerResp, quotes
+
+		UserChoice === 'current' ? BannerResp = resp.data.current : BannerResp = resp.data.upcoming
+
+		UserChoice === 'current' ? quotes = 'Sensei! New banners have approached!' : quotes = 'Sensei! New banners are coming!'
+
+		interaction.reply({
+			content: quotes
+		})
+
+		for (let char of BannerResp) {
+			let name = isLimited(char.gachaType, char.rateups[0])
+			let timestart = convertTime(char.startAt)
+			let timeend = convertTime(char.endAt)
+			// interaction, charName, charIcons, Color, School, StartAt, EndAt, BannerURLs
+			makeEmbed(interaction, name, StudentIcons[name], SchoolColors[school[name]], school[name], timestart, timeend, BannerURLs[name])
+		}
 	}
 }
