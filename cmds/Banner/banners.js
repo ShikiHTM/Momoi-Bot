@@ -7,6 +7,8 @@ const { Arona } = require('./../../config/Game_Init_Config/arona.json')
 
 config();
 
+const TenHour = (10 * 60 * 60 * 1000);
+
 const makeEmbed = (interaction, charName, charIcons, Color, School, StartAt, EndAt, BannerURLs) => {
 	const embed = new EmbedBuilder()
 		.setAuthor({
@@ -27,19 +29,11 @@ const makeEmbed = (interaction, charName, charIcons, Color, School, StartAt, End
 	})
 }
 
-const readJSONFile = (JSONPath) => {
-	return JSON.parse(fs.readFileSync(JSONPath, 'utf-8'))
-}
+const readJSONFile = (JSONPath) => JSON.parse(fs.readFileSync(JSONPath, 'utf-8'))
 
-const isLimited = (Banner, name) => {
-	return Banner == 'LimitedGacha' ? name + ' (Limited)' : name
-}
+const isLimited = (Banner, name) => Banner == 'LimitedGacha' ? name + ' (Limited)' : name
 
-const convertTime = (Time) => {
-	const TenHour = (10 * 60 * 60 * 1000);
-
-	return moment(new Date(Time - TenHour)).format("DD/MM/YYYY")
-}
+const convertTime = (Time) => moment(new Date(Time - TenHour)).format("DD/MM/YYYY")
 
 module.exports = {
 	data: new SlashCommandBuilder().setName('banner').setDescription('Return current banner or upcoming banner!').addStringOption(option =>
@@ -75,11 +69,12 @@ module.exports = {
 		})
 
 		for (let char of BannerResp) {
-			let name = isLimited(char.gachaType, char.rateups[0])
+			let name = char.rateups[0]
+			let convertName = isLimited(char.gachaType, char.rateups[0])
 			let timestart = convertTime(char.startAt)
 			let timeend = convertTime(char.endAt)
 			// interaction, charName, charIcons, Color, School, StartAt, EndAt, BannerURLs
-			makeEmbed(interaction, name, StudentIcons[name], SchoolColors[school[name]], school[name], timestart, timeend, BannerURLs[name])
+			makeEmbed(interaction, convertName, StudentIcons[name], SchoolColors[school[name]], school[name], timestart, timeend, BannerURLs[name])
 		}
 	}
 }
