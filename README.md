@@ -1,11 +1,11 @@
 <img src="https://i.imgur.com/WpCRgvG.png" align='right'>
 
 # Momoi-Bot ✨
-A Discord bot for Blue Archive game, using API from [torikushiii](https://github.com/torikushiii/BlueArchiveAPI). If you could, please support both of us ❤
+A Discord bot for the Blue Archive game, using the API from [torikushiii](https://github.com/torikushiii/BlueArchiveAPI). If you could, please support both of us ❤
 # Installing🔭
 **Node.js 16 or higher is required**
 
-To install all library, you can use the following commands:
+To install all libraries, you can use the following commands:
 ```bash
 # NPM
 npm install
@@ -28,7 +28,7 @@ Add your Bot client ID and your Server ID in
 .config/config.json
 ``
 # Run the bot 🌱
-To run Momoi-bot you can use a few ways:
+To run Momoi-bot, you can use a few ways:
 ```bash
 # PM2
 yarn global add pm2
@@ -49,4 +49,4 @@ npm run start
 npm run stop
 ```
 ## Footer
-I hope you have a good time with my bot, feel free to contribute or contact me if you need something!
+I hope you have a good time with my bot. Feel free to contribute or contact me if you need something!
