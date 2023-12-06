@@ -34,7 +34,7 @@ module.exports = {
 
 	async execute(interaction) {
 		const Raid = readJSONFile(path + 'raid.json')
-		const RaidColor = readJSONFile(path + 'RaidColor.json')
+		const RaidColor = readJSONFile(path + 'raidColor.json')
 		const isCurrent = interaction.options.getString('type') === 'current';
 
 		const { data } = await axios.get(process.env.API + '/raid')

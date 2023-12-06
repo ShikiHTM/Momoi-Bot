@@ -4,7 +4,6 @@ const jsondb = require('simple-json-db');
 const { PingWhenBanner } = require('../modules/PingWhen.Banner');
 const { CHANNEL } = require('./../config/config.json')
 const chalk = require('chalk')
-
 const fs = require('node:fs')
 
 let db = new jsondb('./config/Game_Init_Config/BannerConfig/bannerLink.json');
@@ -102,7 +101,6 @@ function BannerCrawling() {
 //setTimeout(() => {
 //	BannerCrawling();
 //}, 3000)
-
 setInterval(() => {
 	BannerCrawling();
 }, 60 * 10 * 1000);

@@ -7,7 +7,7 @@ Utils/L2D
 
 config/*.json
 
-cmds/Character
+# cmds/Character
 
 .env
 

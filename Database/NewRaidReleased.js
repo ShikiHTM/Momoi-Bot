@@ -17,7 +17,8 @@ async function newRaidReleased() {
         const curBoss = c.data.current[0];
 
         if(!curBoss) {
-            console.log(`${chalk.blue('Kivotos')} is at peace! sensei please take a rest, ${chalk.cyanBright('Arona')} will restart the checker after 10 minutes.`)       
+            console.log(`${chalk.blue('Kivotos')} is at peace! sensei please take a rest, ${chalk.cyanBright('Arona')} will restart the checker after 10 minutes.`)       	
+			return;
         }
 
         const curId = curBoss.seasonId;
@@ -30,8 +31,6 @@ async function newRaidReleased() {
             pingWhenANewRaidBossApperance(curName, startAt, endAt);
             return;
         }
-
-        return;
     })
 }
 
