@@ -10,7 +10,7 @@ const fs = require('node:fs')
 const striData = fs.readFileSync('./init/Students/students.json')
 const rawStriData = JSON.parse(striData);
 
-for(const data in rawStriData) {
-    console.log(rawStriData[data]);
-    db.set(data, url + rawStriData[data] + '.webp');
+for (const data in rawStriData) {
+	console.log(rawStriData[data]);
+	db.set(data, url + rawStriData[data] + '.webp');
 }

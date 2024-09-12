@@ -11,16 +11,22 @@ const readJSONFile = (JSONpath) => {
 	return JSON.parse(fs.readFileSync(JSONpath, 'utf-8'))
 }
 
-const makeEmbed = (bossName, startAt, endAt, BannerURLs, Color) => {
+const makeEmbed = (interaction, quotes, bossName, startAt, endAt, BannerURLs, Color) => {
 	const embed = new EmbedBuilder()
-		.setTitle(bossName.replace(/_/g, " "))
-		.setImage(BannerURLs)
+		.setAuthor({ name: bossName.replace(/_/g, ' ') })
 		.setColor(Color)
-		.setFields({ name: "Start At:", value: startAt, inline: true }, { name: "End At:", value: endAt, inline: true })
+		.setImage(BannerURLs)
+		.addFields(
+			{ name: 'Start At:', value: startAt, inline: true },
+			{ name: 'End At:', value: endAt, inline: true }
+		)
 		.setTimestamp()
-		.setFooter({ text: `Sensei, please give Arona 24k pyroxenes`, iconURL: Arona })
+		.setFooter({ text: `Sensei, please give Arona 24k pyroxenses`, iconURL: Arona })
 
-	return embed;
+	interaction.reply({
+		content: quotes,
+		embeds: [embed]
+	})
 }
 
 const convertTime = (Time) => {
@@ -54,11 +60,6 @@ module.exports = {
 
 		const quotes = isCurrent ? `${interaction.user.displayName}-sensei, ${raidName.replace(/_/g, " ")}'s assault Kivotos!` : `${interaction.user.displayName}-sensei, ${raidName.replace(/_/g, " ")}'s coming! Please give us instructions!`;
 
-		const embed = makeEmbed(raidName, raidStart, raidEnd, Raid[raidName], RaidColor[raidName]);
-
-		interaction.reply({
-			content: quotes,
-			embeds: [embed]
-		})
+		makeEmbed(interaction, quotes, raidName, raidStart, raidEnd, Raid[raidName], RaidColor[raidName]);
 	}
 }

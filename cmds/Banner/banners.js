@@ -16,8 +16,7 @@ const makeEmbed = (interaction, charName, charIcons, Color, School, StartAt, End
 		})
 		.setColor(Color)
 		.setFields(
-			{ name: "Start At:", value: StartAt, inline: true },
-			{ name: "From:", value: School, inline: true },
+			{ name: "Start At:", value: StartAt, inline: true }, { name: "From:", value: School, inline: true },
 			{ name: "End At:", value: EndAt, inline: true }
 		)
 		.setImage(BannerURLs)
@@ -64,7 +63,7 @@ module.exports = {
 
 		UserChoice === 'current' ? quotes = 'Sensei! New banners have approached!' : quotes = 'Sensei! New banners are coming!'
 
-		interaction.reply({
+		await interaction.reply({
 			content: quotes
 		})
 

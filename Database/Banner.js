@@ -13,6 +13,7 @@ const { client } = require('../src');
 let oldlimts = limts.current
 let path = './config/DatabaseConfig/limits.json'
 let tmp;
+let sDB = new jsondb('./Utils/Students/school.json')
 
 //Replace specific words
 function ReplaceWords(words) {
@@ -35,6 +36,12 @@ function handleNewBanners(charName, charImgs, Time) {
 		let curCharName = charName[tmpIndex];
 		let curCharBanner = charImgs[i];
 		let curCharTime = Time[tmpIndex];
+
+		axios.get('https://api.ennead.cc/buruaka/character').then(c => {
+			let tmp = c.data.find(char => char.name == curCharName)
+			sDB.set(curCharName, tmp.school)
+		})
+
 		PingWhenBanner(curCharName, curCharBanner, curCharTime)
 	}
 }
@@ -76,6 +83,8 @@ function BannerCrawling() {
 			let format = new Date(el.split(" ")[0])
 			convertDate.push(format.getTime())
 		})
+
+
 		//Auto-Ping
 		if (limts.current < tmp) {
 			//update the database
@@ -99,10 +108,10 @@ function BannerCrawling() {
 	})
 }
 
-//setTimeout(() => {
-//	BannerCrawling();
-//}, 3000)
-
-setInterval(() => {
+setTimeout(() => {
 	BannerCrawling();
-}, 60 * 10 * 1000);
+}, 3000)
+
+// setInterval(() => {
+// 	BannerCrawling();
+// }, 60 * 10 * 1000);
