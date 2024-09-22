@@ -46,6 +46,7 @@ module.exports = {
 		const { data } = await axios.get(process.env.API + '/raid')
 
 		const raidSyntax = isCurrent ? data.current[0] : data.upcoming[0];
+		console.log(raidSyntax)
 
 		if (!raidSyntax) {
 			const quotes = isCurrent ? "Kivotos is at peace, Sensei please take a rest!" : "Kivotos will at peace in the future, Sensei please take a rest!"
@@ -60,6 +61,7 @@ module.exports = {
 
 		const quotes = isCurrent ? `${interaction.user.displayName}-sensei, ${raidName.replace(/_/g, " ")}'s assault Kivotos!` : `${interaction.user.displayName}-sensei, ${raidName.replace(/_/g, " ")}'s coming! Please give us instructions!`;
 
+		console.log(quotes, raidName, raidStart, raidEnd, Raid[raidName], RaidColor[raidName])
 		makeEmbed(interaction, quotes, raidName, raidStart, raidEnd, Raid[raidName], RaidColor[raidName]);
 	}
 }

@@ -12,3 +12,5 @@ cmds/Character
 .env
 
 src/getAko.js
+
+Database/logoCrawl.js
