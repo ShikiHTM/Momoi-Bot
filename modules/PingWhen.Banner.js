@@ -13,6 +13,8 @@ function PingWhenBanner(charName, charBannerURL, Time) {
 	const schoolColor = ReadJSONFile('./config/Game_Init_Config/BannerConfig/color.json')
 	const startIn = moment(Time).format("DD/MM/YYYY")
 
+	console.log(schoolData[charName], charName)
+
 	const embed = new EmbedBuilder()
 		.setAuthor({
 			name: 'New Banner released!', iconURL: studentLogo[charName]

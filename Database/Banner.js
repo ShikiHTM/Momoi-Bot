@@ -1,19 +1,20 @@
 const cheerio = require('cheerio');
-const axios = require('axios');
-const jsondb = require('simple-json-db');
+const axios = require('axios'); const jsondb = require('simple-json-db');
 const { PingWhenBanner } = require('../modules/PingWhen.Banner');
 const { CHANNEL } = require('./../config/config.json')
 const chalk = require('chalk')
 
-const fs = require('node:fs')
+const fs = require('node:fs').promises
 
 let db = new jsondb('./config/Game_Init_Config/BannerConfig/bannerLink.json');
 let limts = require('./../config/DatabaseConfig/limits.json');
 const { client } = require('../src');
 let oldlimts = limts.current
 let path = './config/DatabaseConfig/limits.json'
-let tmp;
+let newLimitsIndex;
 let sDB = new jsondb('./Utils/Students/school.json')
+
+let isScraping = 0;
 
 //Replace specific words
 function ReplaceWords(words) {
@@ -32,23 +33,43 @@ function handleNewBanners(charName, charImgs, Time) {
 	console.log(`New ${chalk.blueBright('Students')} has apperance! Sensei please give me 1200 ${chalk.blue('pyroxense')}`)
 	channel.send("Sensei! New students are coming!")
 	for (let i = 0; i < charImgs.length; ++i) {
-		let tmpIndex = i + oldlimts + 1;
-		let curCharName = charName[tmpIndex];
-		let curCharBanner = charImgs[i];
-		let curCharTime = Time[tmpIndex];
+		let currentIndex = i + oldlimts + 1;
+		let currentCharName = charName[currentIndex];
+		let currentCharBanner = charImgs[i];
+		let currentCharTime = Time[currentIndex];
 
 		axios.get('https://api.ennead.cc/buruaka/character').then(c => {
-			let tmp = c.data.find(char => char.name == curCharName)
-			sDB.set(curCharName, tmp.school)
+			let characterData = c.data.find(char => char.name == currentCharName)
+			sDB.set(currentCharName, characterData.school)
 		})
 
-		PingWhenBanner(curCharName, curCharBanner, curCharTime)
+		PingWhenBanner(currentCharName, currentCharBanner, currentCharTime)
 	}
 }
 
-function BannerCrawling() {
-	axios.get(`https://bluearchive.wiki/wiki/Banner_List_(Global)`).then(async c => {
-		const $ = cheerio.load(c.data);
+async function updateLimitsFile() {
+	try{
+			await fs.writeFile(path, JSON.stringify(limts, null, 2));
+			console.log('Limits updated successfully');
+	}catch(err) {
+			console.error(`Failed to write to limits.json: ${err.message}`)
+	}
+}
+
+let startTime;
+
+async function BannerCrawling() {
+	try{		
+		if(isScraping) {
+			console.log("Skipping this round as a previous scraping operation is still in progress.")
+			return;
+		}
+
+		isScraping = 1;
+		startTime = Date.now();
+
+		const respone = await axios.get('https://bluearchive.wiki/wiki/Banner_List_(Global)');
+		const $ = cheerio.load(respone.data);
 
 		const imgs = [], charName = [], rawDate = [], convertDate = [];
 
@@ -56,8 +77,8 @@ function BannerCrawling() {
 		$("td.image").each((i, el) => {
 			const img = $(el).find("img").attr("src").replace("//", "https://")
 
-			if (i > limts.current) {
-				tmp = i; // Take the new limit
+			if (i > newLimitsIndex) {
+				newLimitsIndex = i; // Take the new limit
 				imgs.push(img);
 			}
 		})
@@ -86,7 +107,7 @@ function BannerCrawling() {
 
 
 		//Auto-Ping
-		if (limts.current < tmp) {
+		if (Number.isInteger(newLimitsIndex) && limts.current < newLimitsIndex) {
 			//update the database
 			for (let i = 0; i < imgs.length; ++i) {
 				let tmpIndex = i + limts.current + 1;
@@ -94,18 +115,23 @@ function BannerCrawling() {
 			}
 
 			//update Limits
-			limts.current = tmp;
+			limts.current = newLimitsIndex;
 
-			fs.writeFile(path, JSON.stringify(limts, null, 2), (err) => {
-				if (err) throw err;
-			})
+			await updateLimitsFile();
 
 			handleNewBanners(charName, imgs, convertDate)
 			return;
 		}
-		console.log("No change has been caughted")
+		console.log("No new banners found or tmp is invalid")
 		return;
-	})
+	}catch(err){
+		console.log(`err during BannerCrawling:${err.message}`)
+	}finally{
+		const EclipsedTime = Date.now() - startTime;
+		console.log(`Scraping completed in ${EclipsedTime / 1000} seconds`)
+		isScraping = 0;
+	}
+
 }
 
 setTimeout(() => {

@@ -61,7 +61,6 @@ module.exports = {
 
 		const quotes = isCurrent ? `${interaction.user.displayName}-sensei, ${raidName.replace(/_/g, " ")}'s assault Kivotos!` : `${interaction.user.displayName}-sensei, ${raidName.replace(/_/g, " ")}'s coming! Please give us instructions!`;
 
-		console.log(quotes, raidName, raidStart, raidEnd, Raid[raidName], RaidColor[raidName])
 		makeEmbed(interaction, quotes, raidName, raidStart, raidEnd, Raid[raidName], RaidColor[raidName]);
 	}
 }
