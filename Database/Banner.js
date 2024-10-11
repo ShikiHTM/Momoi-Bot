@@ -1,5 +1,6 @@
 const cheerio = require('cheerio');
-const axios = require('axios'); const jsondb = require('simple-json-db');
+const axios = require('axios'); 
+const jsondb = require('simple-json-db');
 const { PingWhenBanner } = require('../modules/PingWhen.Banner');
 const { CHANNEL } = require('./../config/config.json')
 const chalk = require('chalk')
