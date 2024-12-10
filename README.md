@@ -11,7 +11,7 @@ To install all libraries, you can use the following commands:
 npm install
 
 # yarn
-yarn
+yarn install
 ```
 To use the bot, you need to create a .env file with the following commands:
 ```bash
