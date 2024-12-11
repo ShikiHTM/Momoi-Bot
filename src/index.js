@@ -52,8 +52,15 @@ module.exports = { client }
 config();
 
 // Run crawler
-require('../Database/RaidUpcoming')
-require('../Database/Banner')
-require('../Database/NewRaidReleased')
+const BannerCrawler = require('../Database/BannerCrawler')
+const Raid = require('../Database/Raid')
+
+const BannerUpdating = new BannerCrawler()
+const UpcomingRaid = new Raid()
+
+setInterval(() => {
+	BannerUpdating.BannerCrawling()
+	UpcomingRaid.RaidUpComing()
+}, 10000)
 
 client.login(process.env.TOKEN);
