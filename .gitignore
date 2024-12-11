@@ -13,4 +13,5 @@ cmds/Character
 
 src/getAko.js
 
-Database/logoCrawl.js
+Database/NewRaidReleased.js
+Database/Sprite.js
